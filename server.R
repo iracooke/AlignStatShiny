@@ -5,6 +5,8 @@
 # http://shiny.rstudio.com
 #
 
+devtools::install_github("iracooke/AlignStat")
+
 library(shiny)
 library(AlignStat)
 library(ggplot2)
