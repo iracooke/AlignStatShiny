@@ -44,8 +44,12 @@ shinyServer(function(input, output) {
       return(NULL)
 
     "Proportion of alignments with identical character matches (Identity) as
-    a function of alignment position. Optionally also plots the proportion
-    of cysteines (Cysteines) at each position."
+    a function of alignment column."
+    
+    if (is.null(show_prop_cys()))
+      return(NULL)
+    
+    "Additionally, proportion of cysteines at each alignmebt position."
   })
 
   
