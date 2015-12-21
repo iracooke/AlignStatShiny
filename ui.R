@@ -16,7 +16,8 @@ shinyUI(fluidPage(
     titlePanel("AlignStat: Compare two alignments of the same sequences"),
     wellPanel(
       h3("Upload your alignments to make a comparison"),
-      p("Alignments should be of the same sequences in the same order"),
+      p("Upload two alternative alignments to compare them.
+      Alignments contain the same sequences in the same order"),
       
       fileInput("align_a","Alignment A in FASTA format"),
       fileInput("align_b","Alignment B in FASTA format"),
