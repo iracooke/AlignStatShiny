@@ -13,11 +13,10 @@ shinyUI(fluidPage(
 
   # Sidebar with a slider input for number of bins
   verticalLayout(
-    titlePanel("AlignStat: Compare two alignments of the same sequences"),
+    titlePanel("AlignStat: A tool for the statistical comparison of alternative multiple sequence alignments"),
     wellPanel(
-      h3("Upload your alignments to make a comparison"),
-      p("Upload two alternative alignments to compare them.
-      Alignments contain the same sequences in the same order"),
+      h3("Upload your two alignments to make a comparison"),
+      p("Alignments contain the same sequences in the same order"),
       
       fileInput("align_a","Alignment A in FASTA format"),
       fileInput("align_b","Alignment B in FASTA format"),
