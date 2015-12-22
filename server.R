@@ -44,8 +44,12 @@ shinyServer(function(input, output) {
       return(NULL)
 
     "Proportion of alignments with identical character matches (Identity) as
-    a function of alignment position. Optionally also plots the proportion
-    of cysteines (Cysteines) at each position."
+    a function of alignment column."
+    
+    if (is.null(show_prop_cys()))
+      return(NULL)
+    
+    "Additionally, proportion of cysteines at each alignmebt position."
   })
 
   
@@ -64,8 +68,8 @@ shinyServer(function(input, output) {
       return(NULL)
     
     "Agreement heatmap. The value at point (x,y) represents the agreement between 
-    position x in alignment A and position y in alignment B. Agreement value is computed 
-    as the proportion of identical matches not counting conserved gaps. Use this plot to 
+    column x in alignment A and column y in alignment B. Agreement value is computed 
+    as the proportion of identical matches (not counting conserved gaps). Use this plot to 
     determine which positions are well agreed upon by the MSAs, and which are split by 
     one MSA relative to the other."
   })
