@@ -20,19 +20,23 @@ shinyUI(fluidPage(
       
       fileInput("align_a","Alignment A in FASTA format"),
       fileInput("align_b","Alignment B in FASTA format"),
-      checkboxInput("show_prop_cys","Show Cysteine Proportions",value = TRUE),
-      checkboxInput("stack_category_proportions","Stack Category Proportions")
+      checkboxInput("show_prop_cys","Show Cysteine Proportions"),
+      checkboxInput("stack_category_proportions","Stack Dissimilarity Proportions",value = TRUE)
     ),
         
     # Show a plot of the generated distribution
-    plotOutput("match_summary"),
-    textOutput("match_summary_caption"),
-    br(),br(),
-
     plotOutput("heatmap"),
     textOutput("heatmap_caption"),
     br(),br(),
     
+    plotOutput("matrix"),
+    textOutput("matrix_caption"),
+    br(),br(),
+    
+    plotOutput("match_summary"),
+    textOutput("match_summary_caption"),
+    br(),br(),
+
     plotOutput("category_proportions"),
     textOutput("category_proportions_caption"),
     br()
