@@ -39,6 +39,16 @@ shinyUI(fluidPage(
 
     plotOutput("category_proportions"),
     textOutput("category_proportions_caption"),
-    br()
+    br(),br(),
+    
+    wellPanel(
+      p("When comparing the positions of two MSAs:
+        A ‘match’ is when both alignments contain an identical characters that is not a gap.
+        A ‘merge’ is when alignment A contains a gap, but alignment B contains any other character.
+        A ‘split’ is when alignment B contains a gap, but alignment A contains any other character.
+        A ‘shift’ is when two alignments contain a non-identical character, neither of which are gaps.
+        A 'conserved gap' is when the both alignments contain a gap")
+      p("For further information see https://github.com/TS404/AlignStat")        
+    )
   )
 ))
