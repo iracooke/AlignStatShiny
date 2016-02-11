@@ -5,6 +5,7 @@
 # http://shiny.rstudio.com
 #
 library(devtools)
+
 devtools::install_github("iracooke/AlignStat")
 
 library(shiny)
