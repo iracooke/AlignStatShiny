@@ -80,6 +80,13 @@ shinyUI(fluidPage(
         A ‘shift’ is when two alignments contain a non-identical character, neither of which are gaps.
         A ‘conserved gap’ is when the both alignments contain a gap"),
       p("For further information see https://github.com/TS404/AlignStat")        
+    ),
+    
+    wellPanel(
+      h5("Download results in csv format"),
+      downloadButton("similarity_matrix_csv","Similarity Matrix"),
+      downloadButton("dissimilarity_matrix_csv","Dissimilarity Matrix"),
+      downloadButton("results_summary_csv","Results Summary")
     )
   )
 ))
