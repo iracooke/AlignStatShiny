@@ -31,10 +31,6 @@ shinyServer(function(input, output) {
   })
   outputOptions(output, 'comparison_done', suspendWhenHidden=FALSE)
   
-  output$example_data_download <- downloadHandler(filename = "AlignStatExample.zip",content = function(file){
-        download.file(url = "https://dl.dropboxusercontent.com/u/226794/AlignStatShiny/example.zip",destfile = file,quiet = TRUE)
-  })
-  
   #
   # Heatmap 
   #
@@ -166,7 +162,7 @@ shinyServer(function(input, output) {
     write.csv(file = file,comparison()$similarity_S)
   })
   output$dissimilarity_matrix_csv <- downloadHandler(filename = "dissimilarity_matrix.csv", content = function(file){
-    write.csv(file = file,comparison(aa_path,ab_path)$dissimilarity_simple)
+    write.csv(file = file,comparison()$dissimilarity_simple)
   })
   output$results_summary_csv <- downloadHandler(filename = "results_summary.csv", content = function(file){
     write.csv(file = file,comparison()$results_r)
