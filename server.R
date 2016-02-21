@@ -165,7 +165,7 @@ shinyServer(function(input, output) {
     write.csv(file = file,comparison()$dissimilarity_simple)
   })
   output$results_summary_csv <- downloadHandler(filename = "results_summary.csv", content = function(file){
-    write.csv(file = file,comparison()$results_r)
+    write.csv(file = file,comparison()$results_R)
   })
   
   
