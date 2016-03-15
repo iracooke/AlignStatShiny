@@ -108,7 +108,7 @@ shinyUI(fluidPage(
     ),
 
     wellPanel(
-        p("AlignStat was developed by Thomas Shafee, Ira Cooke and Marylin Anderson at ",
+        p("AlignStat was developed by Thomas Shafee and Ira Cooke at the ",
           a(href="http://www.latrobe.edu.au/lims","La Trobe Institute of Molecular Science (LIMS)")," and ",
             a(href="http://hexima.com.au/","Hexima")),
         img(src="http://cysbar.science.latrobe.edu.au/img/hexima.png",width="200px"),
