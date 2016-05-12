@@ -5,14 +5,12 @@
 # http://shiny.rstudio.com
 #
 
-
 library(devtools)
 devtools::install_github("TS404/AlignStat")
 
 # library(AlignStat) # <<<<------- restore once AlignStat updated on CRAN
 
 library(shiny)
-library(AlignStat)
 library(ggplot2)
 
 shinyServer(function(input, output) {
@@ -36,10 +34,6 @@ shinyServer(function(input, output) {
     return(!is.null(comparison()))
   })
   outputOptions(output, 'comparison_done', suspendWhenHidden=FALSE)
-  
-  output$example_data_download <- downloadHandler(filename = "AlignStatExample.zip",content = function(file){
-        download.file(url = "https://dl.dropboxusercontent.com/u/226794/AlignStatShiny/example.zip",destfile = file,quiet = TRUE)
-  })
   
   #
   # Heatmap 
@@ -197,20 +191,21 @@ shinyServer(function(input, output) {
     output$plot_SP_summary <- downloadHandler(filename = "SP_summary.pdf",content = function(file){
       p <- plot_SP_summary()
       ggsave(filename = file,plot = p,device = "pdf",width = 10,height = 6)
-    })
+    })  
     
   #
   # Download csv files
   #
-  
   output$similarity_matrix_csv <- downloadHandler(filename = "similarity_matrix.csv", content = function(file){
     write.csv(file = file,comparison()$similarity_S)
   })
   output$dissimilarity_matrix_csv <- downloadHandler(filename = "dissimilarity_matrix.csv", content = function(file){
-    write.csv(file = file,comparison(aa_path,ab_path)$dissimilarity_simple)
+    write.csv(file = file,comparison()$dissimilarity_simple)
   })
   output$results_summary_csv <- downloadHandler(filename = "results_summary.csv", content = function(file){
     write.csv(file = file,comparison()$results_r)
   })
+  
+  
   
 })
