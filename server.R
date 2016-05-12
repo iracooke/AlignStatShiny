@@ -188,7 +188,7 @@ shinyServer(function(input, output) {
     that are retained in alignment B. The column score is the proportion of columns
     from alignment A that are fully retained in alignment B."
     })
-    output$plot_SP_summary <- downloadHandler(filename = "SP_summary.pdf",content = function(file){
+    output$SP_summary_download <- downloadHandler(filename = "SP_summary.pdf",content = function(file){
       p <- plot_SP_summary()
       ggsave(filename = file,plot = p,device = "pdf",width = 10,height = 6)
     })  
