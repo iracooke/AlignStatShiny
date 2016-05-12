@@ -1,21 +1,3 @@
-Skip to content
-This repository
-Search
-Pull requests
-Issues
-Gist
- @TS404
- Unwatch 1
-  Star 0
-  Fork 1 TS404/AlignStatShiny
-forked from iracooke/AlignStatShiny
- Code  Pull requests 0  Wiki  Pulse  Graphs  Settings
-Tree: 5d9a79ce08 Find file Copy pathAlignStatShiny/ui.R
-5d9a79c  on Feb 17
-@iracooke iracooke Add download buttons for plots
-2 contributors @TS404 @iracooke
-RawBlameHistory     86 lines (72 sloc)  2.97 KB
-
 # This is the user-interface definition of a Shiny web application.
 # You can find out more about building applications with Shiny here:
 #
@@ -107,8 +89,14 @@ shinyUI(fluidPage(
         A ‘shift’ is when two alignments contain a non-identical character, neither of which are gaps.
         A ‘conserved gap’ is when the both alignments contain a gap"),
       p("For further information see https://github.com/TS404/AlignStat")        
+    ),
+    
+    
+    wellPanel(
+      h5("Download results in csv format"),
+      downloadButton("similarity_matrix_csv","Similarity Matrix"),
+      downloadButton("dissimilarity_matrix_csv","Dissimilarity Matrix"),
+      downloadButton("results_summary_csv","Results Summary")
     )
   )
 ))
-Status API Training Shop Blog About
-© 2016 GitHub, Inc. Terms Privacy Security Contact Help
