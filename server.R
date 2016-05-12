@@ -198,4 +198,19 @@ shinyServer(function(input, output) {
       p <- plot_SP_summary()
       ggsave(filename = file,plot = p,device = "pdf",width = 10,height = 6)
     })
+    
+  #
+  # Download csv files
+  #
+  
+  output$similarity_matrix_csv <- downloadHandler(filename = "similarity_matrix.csv", content = function(file){
+    write.csv(file = file,comparison()$similarity_S)
+  })
+  output$dissimilarity_matrix_csv <- downloadHandler(filename = "dissimilarity_matrix.csv", content = function(file){
+    write.csv(file = file,comparison(aa_path,ab_path)$dissimilarity_simple)
+  })
+  output$results_summary_csv <- downloadHandler(filename = "results_summary.csv", content = function(file){
+    write.csv(file = file,comparison()$results_r)
+  })
+  
 })
