@@ -116,4 +116,28 @@ shinyServer(function(input, output) {
     conserved gaps."
   })
   
+  
+  output$SP_summary <- renderPlot({
+    if (is.null(comparison()))
+      return(NULL)
+    if (is.null(sum_of_pairs()))
+      return(NULL)  
+
+    p <- plot_SP_summary(comparison(),display = FALSE)
+    p <- p + ggtitle("Sum of Pairs Summary") + theme(title = element_text(size=20))
+    p <- p + xlab("Alignment B columns")
+    p
+  })
+  output$SP_summary_caption <- renderText({
+    if (is.null(comparison()))
+      return(NULL)
+    if (is.null(sum_of_pairs()))
+      return(NULL)
+    
+    "Summary of the sum of pairs score and related scores between the multiple sequence
+    alignments. The sum of pairs is the proportion of aligned pairs from alignment A
+    that are retained in alignment B. The column score is the proportion of columns from
+    alignment A that are fully retained in alignment B."
+  })
+  
 })
