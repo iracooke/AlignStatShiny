@@ -20,8 +20,9 @@ shinyUI(fluidPage(
       
       fileInput("align_a","Alignment A in FASTA format"),
       fileInput("align_b","Alignment B in FASTA format"),
-      checkboxInput("stack_category_proportions","Stack Category Proportions",value = TRUE),
-      checkboxInput("show_prop_cys","Show Cysteine Proportions")
+      checkboxInput("stack_category_proportions","Stack Dissimilarity Proportions",value = TRUE),
+      checkboxInput("show_prop_cys","Show Cysteine Abundance"),
+      checkboxInput("sum_of_pairs","Calculate Sums of Pairs")
     ),
         
     # Show a plot of the generated distribution
@@ -37,6 +38,10 @@ shinyUI(fluidPage(
     textOutput("match_summary_caption"),
     br(),br(),
 
+    plotOutput("category_proportions"),
+    textOutput("category_proportions_caption"),
+    br(),br(),
+    
     plotOutput("category_proportions"),
     textOutput("category_proportions_caption"),
     br(),br(),
