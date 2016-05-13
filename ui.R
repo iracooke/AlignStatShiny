@@ -34,16 +34,17 @@ shinyUI(fluidPage(
       condition = "!output.comparison_done",
       mainPanel(
         h3("Upload your two alignments to make a comparison"),
-        p("Alignments must be in fasta format. Both alignments should contain the same sequences in the same order."),
+        p("Alignments must be in fasta, clustal, or phylip formats. Both alignments should contain the same sequences in any order."),
         p("If you are unsure how to format your inputs or simply want some data to try the app please take a look at the example data"),
         a(href="https://dl.dropboxusercontent.com/u/226794/AlignStatShiny/example.zip",class="btn btn-default shiny-download-link",
           list(tags$em(class="fa fa-download"),"Example Data")),
         br(),br(),
         wellPanel(
-          fileInput("align_a","Alignment A in FASTA format"),
-          fileInput("align_b","Alignment B in FASTA format"),
+          fileInput("align_a","Alignment A in fasta, clustal, or phylip format"),
+          fileInput("align_b","Alignment B in fasta, clustal, or phylip format"),
           checkboxInput("stack_category_proportions","Stack Category Proportions",value = TRUE),
           checkboxInput("show_prop_cys","Show Cysteine Proportions")
+          checkboxInput("sum_of_pairs","Show Cysteine Proportions")
         )
       )      
     ),
