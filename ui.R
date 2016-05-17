@@ -91,12 +91,12 @@ shinyUI(fluidPage(
       )
     ),
     
-    conditionalPanel(   
-      condition = "output.comparison_done",   
-      wellPanel(    
-        plotOutput("SP_summary"),   
-        textOutput("SP_summary_caption"),   
-        downloadButton("SP_summary_download",label = "Download")    
+    conditionalPanel(
+      condition = "output.comparison_done",
+      wellPanel(
+        plotOutput("SP_summary"),
+        textOutput("SP_summary_caption"),
+        downloadButton("SP_summary_download",label = "Download")
       )   
     ),    
     
