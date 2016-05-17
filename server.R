@@ -27,7 +27,7 @@ shinyServer(function(input, output) {
     aa_path <- aa_file$datapath
     ab_path <- ab_file$datapath
     
-    compare_alignments(reference  = aa_path
+    compare_alignments(reference  = aa_path,
                        comparison = ab_path,
                        SP         = sum_of_pairs)
   })
