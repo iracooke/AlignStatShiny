@@ -6,10 +6,9 @@
 #
 
 # library("devtools")
-# devtools::install_github("TS404/AlignStat")
+# devtools::install_github("TS404/AlignStat") # <<<--- Runs fine locally, but fails on ShinyApp
 
-library("AlignStat") # <<<<------- restore once AlignStat updated on CRAN
-
+library("AlignStat") 
 library("shiny")
 library("ggplot2")
 
@@ -29,7 +28,7 @@ shinyServer(function(input, output) {
     
     compare_alignments(aa_path,
                        ab_path)#, #remove )
-#                       SP         = sum_of_pairs)
+                      # SP         = sum_of_pairs)
   })
   
   output$comparison_done <- reactive({
