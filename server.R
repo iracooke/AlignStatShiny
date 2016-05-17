@@ -5,8 +5,12 @@
 # http://shiny.rstudio.com
 #
 
+library(devtools)
+devtools::install_github("TS404/AlignStat")
+
+# library(AlignStat) # <<<<------- restore once AlignStat updated on CRAN
+
 library(shiny)
-library(AlignStat)
 library(ggplot2)
 
 shinyServer(function(input, output) {
@@ -23,7 +27,9 @@ shinyServer(function(input, output) {
     aa_path <- aa_file$datapath
     ab_path <- ab_file$datapath
     
-    compare_alignments(aa_path,ab_path)
+    compare_alignments(reference  = aa_path
+                       comparison = ab_path,
+                       SP         = sum_of_pairs)
   })
   
   output$comparison_done <- reactive({
@@ -156,6 +162,40 @@ shinyServer(function(input, output) {
   })  
   
   #
+  # Sum of pairs
+  #
+  
+  plot_SP_summary <- function(){
+      p <- plot_SP_summary(comparison(),display = FALSE)
+      p <- p + ggtitle("Sum of Pairs Summary") + theme(title = element_text(size=20))
+      p <- p + xlab("Alignment B columns")
+      p
+    }
+    output$SP_summary <- renderPlot({
+      if (is.null(comparison()))
+        return(NULL)
+      if (input$sum_of_pairs)
+        return(NULL)
+      p <- plot_match_summary()
+      p
+    })
+    output$SP_summary_caption <- renderText({
+      if (is.null(comparison()))
+        return(NULL)
+      if (input$sum_of_pairs)
+        return(NULL)
+  
+    "Summary of the sum of pairs score and related scores between the multiple sequence
+    alignments. The sum of pairs is the proportion of aligned pairs from alignment A
+    that are retained in alignment B. The column score is the proportion of columns
+    from alignment A that are fully retained in alignment B."
+    })
+    output$SP_summary_download <- downloadHandler(filename = "SP_summary.pdf",content = function(file){
+      p <- plot_SP_summary()
+      ggsave(filename = file,plot = p,device = "pdf",width = 10,height = 6)
+    })  
+    
+  #
   # Download csv files
   #
   output$similarity_matrix_csv <- downloadHandler(filename = "similarity_matrix.csv", content = function(file){
@@ -165,9 +205,8 @@ shinyServer(function(input, output) {
     write.csv(file = file,comparison()$dissimilarity_simple)
   })
   output$results_summary_csv <- downloadHandler(filename = "results_summary.csv", content = function(file){
-    write.csv(file = file,comparison()$results_R)
+    write.csv(file = file,comparison()$results_r)
   })
-  
   
   
   
