@@ -5,13 +5,13 @@
 # http://shiny.rstudio.com
 #
 
-library(devtools)
-devtools::install_github("TS404/AlignStat")
+# library("devtools")
+# devtools::install_github("TS404/AlignStat")
 
-# library(AlignStat) # <<<<------- restore once AlignStat updated on CRAN
+library("AlignStat") # <<<<------- restore once AlignStat updated on CRAN
 
-library(shiny)
-library(ggplot2)
+library("shiny")
+library("ggplot2")
 
 shinyServer(function(input, output) {
 
@@ -27,9 +27,9 @@ shinyServer(function(input, output) {
     aa_path <- aa_file$datapath
     ab_path <- ab_file$datapath
     
-    compare_alignments(reference  = aa_path,
-                       comparison = ab_path,
-                       SP         = sum_of_pairs)
+    compare_alignments(aa_path,
+                       ab_path)#, #remove )
+#                       SP         = sum_of_pairs)
   })
   
   output$comparison_done <- reactive({
@@ -40,7 +40,6 @@ shinyServer(function(input, output) {
   #
   # Heatmap 
   #
-  
   plot_heatmap <- function(){
     p <- plot_similarity_heatmap(comparison(),display = FALSE)
     p <- p + ggtitle("Similarity Heatmap") + theme(title = element_text(size=20))
@@ -71,7 +70,6 @@ shinyServer(function(input, output) {
   #
   # Matrix
   # 
-  
   plot_matrix <- function(){
     p <- plot_dissimilarity_matrix(comparison(),display = FALSE)
     p <- p + ggtitle("Dissimilarity matrix") + theme(title = element_text(size=20))
@@ -100,7 +98,6 @@ shinyServer(function(input, output) {
   #
   # Match Summary
   #
-  
   plot_match_summary <- function(){
     p <- plot_similarity_summary(comparison(),cys = input$show_prop_cys,display = FALSE)
     p <- p + ggtitle("Similarity Summary") + theme(title = element_text(size=20))
@@ -134,7 +131,6 @@ shinyServer(function(input, output) {
   #
   # Dissimilarity Summary
   #
-
   plot_diss_sum <- function(){
     p <- plot_dissimilarity_summary(comparison(),stack = input$stack_category_proportions,display = FALSE)
     p <- p + ggtitle("Dissimilarity summary") + theme(title= element_text(size=20))
@@ -164,8 +160,9 @@ shinyServer(function(input, output) {
   #
   # Sum of pairs
   #
-  
   plot_SP_summary <- function(){
+      if (!input$sum_of_pairs)
+        return(NULL)
       p <- plot_SP_summary(comparison(),display = FALSE)
       p <- p + ggtitle("Sum of Pairs Summary") + theme(title = element_text(size=20))
       p <- p + xlab("Alignment B columns")
@@ -174,15 +171,15 @@ shinyServer(function(input, output) {
     output$SP_summary <- renderPlot({
       if (is.null(comparison()))
         return(NULL)
-      if (input$sum_of_pairs)
+      if (!input$sum_of_pairs)
         return(NULL)
-      p <- plot_match_summary()
+      p <- plot_SP_summary()
       p
     })
     output$SP_summary_caption <- renderText({
       if (is.null(comparison()))
         return(NULL)
-      if (input$sum_of_pairs)
+      if (!input$sum_of_pairs)
         return(NULL)
   
     "Summary of the sum of pairs score and related scores between the multiple sequence

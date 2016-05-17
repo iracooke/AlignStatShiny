@@ -5,11 +5,10 @@
 # http://shiny.rstudio.com
 #
 
-library(shiny)
+library("shiny")
 
 shinyUI(fluidPage(
 
-  
 
   # Sidebar with a slider input for number of bins
   verticalLayout(
@@ -43,8 +42,8 @@ shinyUI(fluidPage(
           fileInput("align_a","Alignment A in fasta, clustal, or phylip format"),
           fileInput("align_b","Alignment B in fasta, clustal, or phylip format"),
           checkboxInput("stack_category_proportions","Stack category proportions",value = TRUE),
-          checkboxInput("show_prop_cys","Show cysteine abundance"),
-          checkboxInput("sum_of_pairs","Calculate sum of pairs")
+          checkboxInput("show_prop_cys","Show cysteine abundance",value = FALSE),
+          checkboxInput("sum_of_pairs","Calculate sum of pairs",value = FALSE)
         )
       )      
     ),
@@ -109,7 +108,8 @@ shinyUI(fluidPage(
           A ‘split’ is when alignment B contains a gap, but alignment A contains any other character.
           A ‘shift’ is when two alignments contain a non-identical character, neither of which are gaps.
           A ‘conserved gap’ is when the both alignments contain a gap"),
-        p("For further information see https://github.com/TS404/AlignStat")
+        p("For further information see",
+          a(href="https://github.com/TS404/AlignStat","github.com/TS404/AlignStat"))
         ),
         wellPanel(
         h5("Download results in csv format"),
