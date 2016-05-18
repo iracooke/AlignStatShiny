@@ -8,7 +8,7 @@
 # library("devtools")
 # devtools::install_github("iracooke/AlignStat") # <<<--- Runs fine locally, but fails on ShinyApp
 # 
-# library("AlignStat") 
+library("AlignStat") 
 library("shiny")
 library("ggplot2")
 
