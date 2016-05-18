@@ -6,9 +6,9 @@
 #
 
 # library("devtools")
-# devtools::install_github("TS404/AlignStat") # <<<--- Runs fine locally, but fails on ShinyApp
-
-library("AlignStat") 
+# devtools::install_github("iracooke/AlignStat") # <<<--- Runs fine locally, but fails on ShinyApp
+# 
+# library("AlignStat") 
 library("shiny")
 library("ggplot2")
 
@@ -179,7 +179,7 @@ shinyServer(function(input, output) {
       if (is.null(comparison()))
         return(NULL)
       if (!input$sum_of_pairs)
-        return(NULL)
+        return("Unable to compute sum of pairs score for this alignment")
   
     "Summary of the sum of pairs score and related scores between the multiple sequence
     alignments. The sum of pairs is the proportion of aligned pairs from alignment A
