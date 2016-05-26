@@ -35,6 +35,12 @@ shinyServer(function(input, output) {
     return(!is.null(comparison()))
   })
   outputOptions(output, 'comparison_done', suspendWhenHidden=FALSE)
+
+  output$comparison_has_sum_of_pairs <- reactive({
+    result <- comparison()
+    return(!is.null(result$sum_of_pairs))
+  })
+  outputOptions(output, 'comparison_has_sum_of_pairs', suspendWhenHidden=FALSE)
   
   #
   # Heatmap 

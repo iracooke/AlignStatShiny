@@ -88,7 +88,7 @@ shinyUI(fluidPage(
     ),
     
     conditionalPanel(
-      condition = "output.comparison_done",
+      condition = "output.comparison_has_sum_of_pairs",
       wellPanel(
         plotOutput("SP_summary"),
         textOutput("SP_summary_caption"),
@@ -97,7 +97,7 @@ shinyUI(fluidPage(
     ),    
     
     conditionalPanel(
-      condition = "output.comparison_done",
+        condition = "output.comparison_done",
         wellPanel(
         p("When comparing the positions of two MSAs:
           A ‘match’ is when both alignments contain an identical characters that is not a gap.
