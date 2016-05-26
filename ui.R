@@ -121,7 +121,7 @@ shinyUI(fluidPage(
           a(href="http://www.latrobe.edu.au/lims","La Trobe Institute of Molecular Science (LIMS)")," and ",
             a(href="http://hexima.com.au/","Hexima")),
         img(src="http://cysbar.science.latrobe.edu.au/img/lims.png",width="200px"),
-        img(src=,"http://cysbar.science.latrobe.edu.au/img/hexima.png",width="200px")
+        img(src="http://cysbar.science.latrobe.edu.au/img/hexima.png",width="200px")
     )
 
   )
