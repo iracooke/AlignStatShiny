@@ -139,13 +139,14 @@ shinyUI(fluidPage(
         h4("Download SPS results in .txt format"),
         downloadButton("SP_ref_txt","Sum of Pairs Reference"),
         downloadButton("SP_com_txt","Sum of Pairs Comparison"),
-        downloadButton("SP_scores_txt","Sum of Pairs Scores"),
+        downloadButton("SP_scores_csv","Sum of Pairs Scores"),
         p("The Sum of Pairs Reference lists all residue pairs present in the reference
           MSA. The Sum of Pairs Comparison lists all residue pairs present in the
           comparison MSA. The Sum of Pairs Scores lists the proportion of reference
           pairs retained in each column of the comparison MSA"),        
       )   
     ),    
+
 
     wellPanel(
         p("AlignStat was developed by Thomas Shafee and Ira Cooke at the ",
