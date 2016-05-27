@@ -19,8 +19,8 @@ shinyServer(function(input, output) {
     if (is.null(aa_file) | (is.null(ab_file)))
       return(NULL)
     
-    aa_path <- aa_file$datapath
-    ab_path <- ab_file$datapath
+    aa_path <- import_alignment2(aa_file$datapath,tools::file_ext(aa_file$name))
+    ab_path <- import_alignment2(ab_file$datapath,tools::file_ext(ab_file$name))
     
     compare_alignments(aa_path,
                        ab_path,
@@ -216,3 +216,53 @@ shinyServer(function(input, output) {
     write.csv(file = file,comparison()$sum_of_pairs$columnwise.SPS)
   })  
 })
+
+
+import_alignment2 <- function(alignment,format=NULL){
+  
+  # default fmt
+  fmt <- "fasta"
+  
+  # if clustal
+  if( format=="clustal"
+      |format=="CLUSTAL"
+      |format=="aln"
+      |format=="ALN"
+      |format=="clust"
+      |format=="clus"){
+    fmt <- "clustal"
+  }
+  
+  # if msf
+  if( format=="msf"
+      |format=="MSF"){
+    fmt <- "msf"
+  }
+  
+  # if mase
+  if( format=="mase"
+      |format=="MASE"){
+    fmt <- "mase"
+  }
+  
+  # if phylip
+  if( format=="phylip"
+      |format=="PHYLIP"
+      |format=="phy"
+      |format=="PHY"
+      |format=="ph"
+      |format=="PH"){
+    fmt <- "phylip"
+  }  
+  
+  # import
+  temp <- seqinr::read.alignment(alignment,format=fmt)
+  # fix names
+  temp$nam <- do.call("rbind", lapply(strsplit(temp$nam," "),"[[", 1))
+  # reformat to data frame
+  output <- data.frame(strsplit(gsub("[\r\n]","",unlist(temp$seq)),split = ""))
+  colnames(output) <- temp$nam
+  
+  output
+}
+
