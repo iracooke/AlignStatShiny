@@ -1,13 +1,9 @@
-
 # This is the server logic for a Shiny web application.
 # You can find out more about building applications with Shiny here:
 #
 # http://shiny.rstudio.com
 #
 
-# library("devtools")
-# devtools::install_github("iracooke/AlignStat") # <<<--- Runs fine locally, but fails on ShinyApp
-# 
 library("AlignStat") 
 library("shiny")
 library("ggplot2")
@@ -23,12 +19,12 @@ shinyServer(function(input, output) {
     if (is.null(aa_file) | (is.null(ab_file)))
       return(NULL)
     
-    aa_path <- aa_file$datapath
-    ab_path <- ab_file$datapath
+    aa_path <- import_alignment2(aa_file$datapath,tools::file_ext(aa_file$name))
+    ab_path <- import_alignment2(ab_file$datapath,tools::file_ext(ab_file$name))
     
     compare_alignments(aa_path,
-                       ab_path)#, #remove )
-                      # SP         = sum_of_pairs)
+                       ab_path,
+                       SP = input$calculate_sum_of_pairs)
   })
   
   output$comparison_done <- reactive({
@@ -165,8 +161,8 @@ shinyServer(function(input, output) {
   #
   # Sum of pairs
   #
-  plot_SP_summary <- function(){
-      if (!input$sum_of_pairs)
+  plot_SP_sum <- function(){
+      if (!input$calculate_sum_of_pairs)
         return(NULL)
       p <- plot_SP_summary(comparison(),display = FALSE)
       p <- p + ggtitle("Sum of Pairs Summary") + theme(title = element_text(size=20))
@@ -176,15 +172,15 @@ shinyServer(function(input, output) {
     output$SP_summary <- renderPlot({
       if (is.null(comparison()))
         return(NULL)
-      if (!input$sum_of_pairs)
+      if (!input$calculate_sum_of_pairs)
         return(NULL)
-      p <- plot_SP_summary()
+      p <- plot_SP_sum()
       p
     })
     output$SP_summary_caption <- renderText({
       if (is.null(comparison()))
         return(NULL)
-      if (!input$sum_of_pairs)
+      if (!input$calculate_sum_of_pairs)
         return("Unable to compute sum of pairs score for this alignment")
   
     "Summary of the sum of pairs score and related scores between the multiple sequence
@@ -193,7 +189,7 @@ shinyServer(function(input, output) {
     from alignment A that are fully retained in alignment B."
     })
     output$SP_summary_download <- downloadHandler(filename = "SP_summary.pdf",content = function(file){
-      p <- plot_SP_summary()
+      p <- plot_SP_sum()
       ggsave(filename = file,plot = p,device = "pdf",width = 10,height = 6)
     })  
     
@@ -207,9 +203,66 @@ shinyServer(function(input, output) {
     write.csv(file = file,comparison()$dissimilarity_simple)
   })
   output$results_summary_csv <- downloadHandler(filename = "results_summary.csv", content = function(file){
-    write.csv(file = file,comparison()$results_r)
+    write.csv(file = file,comparison()$results_R)
   })
   
-  
-  
+  output$SP_ref_txt <- downloadHandler(filename = "sum_of_pairs_reference.txt", content = function(file){
+    lapply(comparison()$sum_of_pairs$ref.pairs, write, file, append=TRUE)
+  })
+  output$SP_com_txt <- downloadHandler(filename = "sum_of_pairs_comparison.txt", content = function(file){
+    lapply(comparison()$sum_of_pairs$com.pairs, write, file, append=TRUE)
+  })
+  output$SP_scores_csv <- downloadHandler(filename = "SPS_summary.csv", content = function(file){
+    write.csv(file = file,comparison()$sum_of_pairs$columnwise.SPS)
+  })  
 })
+
+
+import_alignment2 <- function(alignment,format=NULL){
+  
+  # default fmt
+  fmt <- "fasta"
+  
+  # if clustal
+  if( format=="clustal"
+      |format=="CLUSTAL"
+      |format=="aln"
+      |format=="ALN"
+      |format=="clust"
+      |format=="clus"){
+    fmt <- "clustal"
+  }
+  
+  # if msf
+  if( format=="msf"
+      |format=="MSF"){
+    fmt <- "msf"
+  }
+  
+  # if mase
+  if( format=="mase"
+      |format=="MASE"){
+    fmt <- "mase"
+  }
+  
+  # if phylip
+  if( format=="phylip"
+      |format=="PHYLIP"
+      |format=="phy"
+      |format=="PHY"
+      |format=="ph"
+      |format=="PH"){
+    fmt <- "phylip"
+  }  
+  
+  # import
+  temp <- seqinr::read.alignment(alignment,format=fmt)
+  # fix names
+  temp$nam <- do.call("rbind", lapply(strsplit(temp$nam," "),"[[", 1))
+  # reformat to data frame
+  output <- data.frame(strsplit(gsub("[\r\n]","",unlist(temp$seq)),split = ""))
+  colnames(output) <- temp$nam
+  
+  output
+}
+
