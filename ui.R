@@ -31,7 +31,7 @@ shinyUI(fluidPage(
       mainPanel(
         h3("Upload your two alignments to make a comparison"),
         p("Alignments must be in fasta, clustal, msf, or phylip formats. Both alignments should contain the same sequences in any order."),
-        p("If you are unsure how to format your inputs or simply want some data to try the app please take a look at the example data"),
+        p("If you are unsure how to format your inputs or simply want some data to try the app please take a look at the example data."),
         a(href="https://dl.dropboxusercontent.com/u/226794/AlignStatShiny/example.zip",class="btn btn-default shiny-download-link",
           list(tags$em(class="fa fa-download"),"Example Data")),
         br(),br(),
