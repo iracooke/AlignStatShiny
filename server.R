@@ -1,13 +1,9 @@
-
 # This is the server logic for a Shiny web application.
 # You can find out more about building applications with Shiny here:
 #
 # http://shiny.rstudio.com
 #
 
-# library("devtools")
-# devtools::install_github("iracooke/AlignStat") # <<<--- Runs fine locally, but fails on ShinyApp
-# 
 library("AlignStat") 
 library("shiny")
 library("ggplot2")
@@ -209,7 +205,23 @@ shinyServer(function(input, output) {
   output$results_summary_csv <- downloadHandler(filename = "results_summary.csv", content = function(file){
     write.csv(file = file,comparison()$results_r)
   })
-  
-  
-  
+  output$SP_ref_txt <- downloadHandler(filename = "sum_of_pairs_reference.txt", content = function(file){
+    if (!input$sum_of_pairs)
+      return(NULL)
+    lapply(comparison()$sum_of_pairs$ref.pairs, write, file, append=TRUE)
+  })
+  output$SP_com_txt <- downloadHandler(filename = "sum_of_pairs_comparison.txt", content = function(file){
+    if (!input$sum_of_pairs)
+      return(NULL)
+    lapply(comparison()$sum_of_pairs$com.pairs, write, file, append=TRUE)
+  })
+  output$SP_scores_csv <- downloadHandler(filename = "SPS_summary.csv", content = function(file){
+    if (!input$sum_of_pairs)
+      return(NULL)
+    write.csv(file = file,comparison()$sum_of_pairs$columnwise.SPS)
+  })  
 })
+
+
+if (!input$sum_of_pairs)
+  return(NULL)

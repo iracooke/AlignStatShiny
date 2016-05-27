@@ -95,26 +95,57 @@ shinyUI(fluidPage(
         downloadButton("SP_summary_download",label = "Download")
       )   
     ),    
-    
+
+
     conditionalPanel(
         condition = "output.comparison_done",
         wellPanel(
-        p("When comparing the positions of two MSAs:
-          A ‘match’ is when both alignments contain an identical characters that is not a gap.
-          A ‘merge’ is when alignment A contains a gap, but alignment B contains any other character.
-          A ‘split’ is when alignment B contains a gap, but alignment A contains any other character.
-          A ‘shift’ is when two alignments contain a non-identical character, neither of which are gaps.
-          A ‘conserved gap’ is when the both alignments contain a gap"),
-        p("For further information see",
-          a(href="https://github.com/TS404/AlignStat","github.com/TS404/AlignStat"))
+          p("When comparing the positions of two MSAs:
+            A ‘match’ is when both alignments contain an identical characters that is not a gap.
+            A ‘merge’ is when alignment A contains a gap, but alignment B contains any other character.
+            A ‘split’ is when alignment B contains a gap, but alignment A contains any other character.
+            A ‘shift’ is when two alignments contain a non-identical character, neither of which are gaps.
+            A ‘conserved gap’ is when the both alignments contain a gap"),
+          p("For further information see",
+            a(href="https://github.com/TS404/AlignStat","github.com/TS404/AlignStat"))
         ),
         wellPanel(
-        h5("Download results in csv format"),
-        downloadButton("similarity_matrix_csv","Similarity Matrix"),
-        downloadButton("dissimilarity_matrix_csv","Dissimilarity Matrix"),
-        downloadButton("results_summary_csv","Results Summary")
-      )
+          h4("Download results in csv format"),
+          downloadButton("similarity_matrix_csv","Similarity Matrix"),
+          downloadButton("dissimilarity_matrix_csv","Dissimilarity Matrix"),
+          downloadButton("results_summary_csv","Results Summary"),
+          p("The Similarity Matrix records which columns of the reference and comparison
+            MSAs best match. Its [i,j]th entry is the similarity score between
+            the ith column of the reference alignment and the jth column of the
+            comparison alignment. Used to determine which columns are most similar
+            for further analysis. Used to generate the similarity heatmap plot."),
+          p("The Dissimilarity Matrix categorises dissimilarity in the MSF.
+            Its [i,j]th entry is the dissimilarity category of the jth
+            residue of the ith sequence for the reference alignment versus the
+            comparison alignment (M=match, g=conserved gap, m=merge, s=split, x=shift).
+            Used to the dissimilarity matrix plot."),        
+          p("The Results Matrix summarises columnwise similarity and disimilarity.
+            Its [i,j]th entry is the ith match category average of the
+            jth column of the reference alignment versus the comparison alignment
+            (i1=match, i2=conserved gap, i3=merge, i4=split, i5=shift) Used to
+            generate the similarity summary and dissimilarity summary plots.")
+        )
     ),
+
+
+    conditionalPanel(
+      condition = "output.comparison_has_sum_of_pairs",
+      wellPanel(
+        h4("Download SPS results in .txt format"),
+        downloadButton("SP_ref_txt","Sum of Pairs Reference"),
+        downloadButton("SP_com_txt","Sum of Pairs Comparison"),
+        downloadButton("SP_scores_txt","Sum of Pairs Scores"),
+        p("The Sum of Pairs Reference lists all residue pairs present in the reference
+          MSA. The Sum of Pairs Comparison lists all residue pairs present in the
+          comparison MSA. The Sum of Pairs Scores lists the proportion of reference
+          pairs retained in each column of the comparison MSA"),        
+      )   
+    ),    
 
     wellPanel(
         p("AlignStat was developed by Thomas Shafee and Ira Cooke at the ",
