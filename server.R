@@ -221,7 +221,3 @@ shinyServer(function(input, output) {
     write.csv(file = file,comparison()$sum_of_pairs$columnwise.SPS)
   })  
 })
-
-
-if (!input$sum_of_pairs)
-  return(NULL)

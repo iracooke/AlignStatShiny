@@ -105,7 +105,7 @@ shinyUI(fluidPage(
             A ‘merge’ is when alignment A contains a gap, but alignment B contains any other character.
             A ‘split’ is when alignment B contains a gap, but alignment A contains any other character.
             A ‘shift’ is when two alignments contain a non-identical character, neither of which are gaps.
-            A ‘conserved gap’ is when the both alignments contain a gap"),
+            A ‘conserved gap’ is when the both alignments contain a gap."),
           p("For further information see",
             a(href="https://github.com/TS404/AlignStat","github.com/TS404/AlignStat"))
         ),
@@ -143,7 +143,7 @@ shinyUI(fluidPage(
         p("The Sum of Pairs Reference lists all residue pairs present in the reference
           MSA. The Sum of Pairs Comparison lists all residue pairs present in the
           comparison MSA. The Sum of Pairs Scores lists the proportion of reference
-          pairs retained in each column of the comparison MSA"),        
+          pairs retained in each column of the comparison MSA")        
       )   
     ),    
 
