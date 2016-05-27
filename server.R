@@ -23,8 +23,8 @@ shinyServer(function(input, output) {
     ab_path <- ab_file$datapath
     
     compare_alignments(aa_path,
-                       ab_path)#, #remove )
-                      # SP         = sum_of_pairs)
+                       ab_path,
+                       SP = input$calculate_sum_of_pairs)
   })
   
   output$comparison_done <- reactive({
@@ -161,8 +161,8 @@ shinyServer(function(input, output) {
   #
   # Sum of pairs
   #
-  plot_SP_summary <- function(){
-      if (!input$sum_of_pairs)
+  plot_SP_sum <- function(){
+      if (!input$calculate_sum_of_pairs)
         return(NULL)
       p <- plot_SP_summary(comparison(),display = FALSE)
       p <- p + ggtitle("Sum of Pairs Summary") + theme(title = element_text(size=20))
@@ -172,15 +172,15 @@ shinyServer(function(input, output) {
     output$SP_summary <- renderPlot({
       if (is.null(comparison()))
         return(NULL)
-      if (!input$sum_of_pairs)
+      if (!input$calculate_sum_of_pairs)
         return(NULL)
-      p <- plot_SP_summary()
+      p <- plot_SP_sum()
       p
     })
     output$SP_summary_caption <- renderText({
       if (is.null(comparison()))
         return(NULL)
-      if (!input$sum_of_pairs)
+      if (!input$calculate_sum_of_pairs)
         return("Unable to compute sum of pairs score for this alignment")
   
     "Summary of the sum of pairs score and related scores between the multiple sequence
@@ -189,7 +189,7 @@ shinyServer(function(input, output) {
     from alignment A that are fully retained in alignment B."
     })
     output$SP_summary_download <- downloadHandler(filename = "SP_summary.pdf",content = function(file){
-      p <- plot_SP_summary()
+      p <- plot_SP_sum()
       ggsave(filename = file,plot = p,device = "pdf",width = 10,height = 6)
     })  
     
@@ -203,21 +203,16 @@ shinyServer(function(input, output) {
     write.csv(file = file,comparison()$dissimilarity_simple)
   })
   output$results_summary_csv <- downloadHandler(filename = "results_summary.csv", content = function(file){
-    write.csv(file = file,comparison()$results_r)
+    write.csv(file = file,comparison()$results_R)
   })
+  
   output$SP_ref_txt <- downloadHandler(filename = "sum_of_pairs_reference.txt", content = function(file){
-    if (!input$sum_of_pairs)
-      return(NULL)
     lapply(comparison()$sum_of_pairs$ref.pairs, write, file, append=TRUE)
   })
   output$SP_com_txt <- downloadHandler(filename = "sum_of_pairs_comparison.txt", content = function(file){
-    if (!input$sum_of_pairs)
-      return(NULL)
     lapply(comparison()$sum_of_pairs$com.pairs, write, file, append=TRUE)
   })
   output$SP_scores_csv <- downloadHandler(filename = "SPS_summary.csv", content = function(file){
-    if (!input$sum_of_pairs)
-      return(NULL)
     write.csv(file = file,comparison()$sum_of_pairs$columnwise.SPS)
   })  
 })

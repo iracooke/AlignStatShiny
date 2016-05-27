@@ -40,7 +40,7 @@ shinyUI(fluidPage(
           fileInput("align_b","Alignment B in fasta, clustal, msf, or phylip format"),
           checkboxInput("stack_category_proportions","Stack category proportions",value = TRUE),
           checkboxInput("show_prop_cys","Show cysteine abundance",value = FALSE),
-          checkboxInput("sum_of_pairs","Calculate sum of pairs",value = FALSE)
+          checkboxInput("calculate_sum_of_pairs","Calculate sum of pairs",value = FALSE)
         )
       )      
     ),
@@ -127,7 +127,7 @@ shinyUI(fluidPage(
           p("The Results Matrix summarises columnwise similarity and disimilarity.
             Its [i,j]th entry is the ith match category average of the
             jth column of the reference alignment versus the comparison alignment
-            (i1=match, i2=conserved gap, i3=merge, i4=split, i5=shift) Used to
+            (i1=match, i2=conserved gap, i3=merge, i4=split, i5=shift). Used to
             generate the similarity summary and dissimilarity summary plots.")
         )
     ),
@@ -136,7 +136,7 @@ shinyUI(fluidPage(
     conditionalPanel(
       condition = "output.comparison_has_sum_of_pairs",
       wellPanel(
-        h4("Download SPS results in .txt format"),
+        h4("Download SPS results in txt and formats"),
         downloadButton("SP_ref_txt","Sum of Pairs Reference"),
         downloadButton("SP_com_txt","Sum of Pairs Comparison"),
         downloadButton("SP_scores_csv","Sum of Pairs Scores"),
