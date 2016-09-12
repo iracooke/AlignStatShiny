@@ -185,8 +185,8 @@ shinyServer(function(input, output) {
   
     "Summary of the sum of pairs score and related scores between the multiple sequence
     alignments. The sum of pairs is the proportion of aligned pairs from alignment A
-    that are retained in alignment B. The column score is the proportion of columns
-    from alignment A that are fully retained in alignment B."
+    that are retained in alignment B. The column score is the proportion of columns 
+      that contribute to the column score. "
     })
     output$SP_summary_download <- downloadHandler(filename = "SP_summary.pdf",content = function(file){
       p <- plot_SP_sum()
