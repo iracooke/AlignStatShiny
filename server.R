@@ -100,7 +100,7 @@ shinyServer(function(input, output) {
   # Match Summary
   #
   plot_match_summary <- function(){
-    p <- plot_similarity_summary(comparison(),cys = input$show_prop_cys,display = FALSE)
+    p <- plot_similarity_summary(comparison(),cys = input$show_prop_cys, CS = input$calculate_column_score, display = FALSE)
     p <- p + ggtitle("Similarity Summary") + theme(title = element_text(size=20))
     p <- p + xlab("Alignment A columns")
     p    
@@ -164,7 +164,7 @@ shinyServer(function(input, output) {
   plot_SP_sum <- function(){
       if (!input$calculate_sum_of_pairs)
         return(NULL)
-      p <- plot_SP_summary(comparison(),display = FALSE)
+      p <- plot_SP_summary(comparison(), CS = input$calculate_column_score, display = FALSE)
       p <- p + ggtitle("Sum of Pairs Summary") + theme(title = element_text(size=20))
       p <- p + xlab("Alignment B columns")
       p

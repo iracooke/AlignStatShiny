@@ -40,6 +40,7 @@ shinyUI(fluidPage(
           fileInput("align_b","Alignment B in fasta, clustal, msf, or phylip format"),
           checkboxInput("stack_category_proportions","Stack category proportions",value = TRUE),
           checkboxInput("show_prop_cys","Show cysteine abundance",value = FALSE),
+          checkboxInput("calculate_column_score","Calculate column score",value = FALSE),
           checkboxInput("calculate_sum_of_pairs","Calculate sum of pairs",value = FALSE)
         )
       )      
